@@ -6,7 +6,6 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE)
 #install.packages(c("tidyverse","skimr"))
 ```
@@ -46,7 +45,7 @@ skimr::skim_without_charts(penguins)
 
 To make a scatterplot of flipper and bill's lengh, first I made a plt_data to collect return result of cleaned penguins dataset( which contains `r sum(is.na.data.frame(penguins))` missing data). And save the result under the same dictionary of RMD files.
 
-```{r scatterplot,warning=FALSE, echo = F, message= F}
+```{r scatterplot,warning=FALSE, message= F}
 plt_data = penguins %>%
   filter(
     !is.na(get("flipper_length_mm")),
@@ -66,7 +65,7 @@ plt_flivbil <- ggplot(
   )+
   ggtitle("Penguins' Length of Flipper vs Bill")
 ggsave(plot = plt_flivbil,
-filename = paste(getwd(),"p8105_hw1_zl2974_flipper_v_bill.png",sep="/")
+filename = paste(here::here(),"Result/p8105_hw1_zl2974_flipper_v_bill.png",sep="/")
 )
 show(plt_flivbil)
 ```
