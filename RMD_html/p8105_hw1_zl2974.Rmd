@@ -36,7 +36,9 @@ Load and clean dataset
 data("penguins",package = "palmerpenguins")
 ```
 
-In this dataset, we've seen a `r nrow(penguins)`  *  `r ncol(penguins)` size, in which contains column's variables eg. `r names(penguins)`. And the following is the detailed descriptive statistics of penguins data.
+In this dataset, we've seen a `r nrow(penguins)`  *  `r ncol(penguins)` size, in which contains column's variables eg. _`r names(penguins)`_.In the __`r names(penguins)[[5]]`__ we are going to discuss, we see that this variable is a `r class(pull(penguins,'flipper_length_mm'))` type variable(`r tail(pull(penguins,'flipper_length_mm'))`). Also we need to see __`r names(penguins)[[1]]`__, which is a `r class(pull(penguins,'species'))` type data, with level of _`r as.character(unique(pull(penguins,'species')))`_.
+
+And the following is the detailed descriptive statistics of penguins data.
 
 ```{r Detailed_statistics, collapse= TRUE}
 skimr::skim_without_charts(penguins)
