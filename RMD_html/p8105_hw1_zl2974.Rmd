@@ -1,0 +1,73 @@
+---
+title: "p8105_hw1_zl2974"
+author: "ZHuohui(Jeffrey) Liang, Github:zl2974  "
+date: "2020/9/15"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages(c("tidyverse","skimr"))
+```
+```{r loading_package, echo=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+# Solution For Problem 1
+
+*Create a data frame*
+
+```{r}
+df_1 <- tibble(
+  samp = rnorm(10),
+  samp_grt_0 = samp > 0,
+  char = strsplit("thesereten",split = '')[[1]],
+  fac = factor(strsplit("abcabcacba", split = '')[[1]]) #what i am confusing here is that this function create list, and list() and c() behave so inconsistantly in R, is there any good sugguestion to avoid list() overall? Or good way to detected before bugging?
+)
+str(df_1)
+```
+
+# Solution to Problem 2
+
+Load and clean dataset
+
+```{r load_dataset, warning= FALSE}
+data("penguins",package = "palmerpenguins")
+```
+
+In this dataset, we've seen a `r nrow(penguins)`  *  `r ncol(penguins)` size, in which contains column's variables eg. `r names(penguins)`. And the following is the detailed descriptive statistics of penguins data.
+
+```{r Detailed_statistics, collapse= TRUE}
+skimr::skim_without_charts(penguins)
+```
+
+To make a scatterplot of flipper and bill's lengh, first I made a plt_data to collect return result of cleaned penguins dataset( which contains `r sum(is.na.data.frame(penguins))` missing data). And save the result under the same dictionary of RMD files.
+
+```{r scatterplot,warning=FALSE, echo = F, message= F}
+plt_data = penguins %>%
+  filter(
+    !is.na(get("flipper_length_mm")),
+    !is.na(get("bill_length_mm"))
+  )%>%
+  select("flipper_length_mm","bill_length_mm","species")
+plt_flivbil <- ggplot(
+  data  = plt_data,
+  aes_string(x = "bill_length_mm",
+             y = "flipper_length_mm",
+             color = "species"
+             )) +
+  geom_jitter() +
+  labs(
+    y = "Length of Flipper (MM)",
+    x = "Length of Bill (MM)"
+  )+
+  ggtitle("Penguins' Length of Flipper vs Bill")
+ggsave(plot = plt_flivbil,
+filename = paste(getwd(),"p8105_hw1_zl2974_flipper_v_bill.png",sep="/")
+)
+show(plt_flivbil)
+```
+
+As we see in this scatter plot, the length of flipper and bill shows concentration within their species, Adelle has the lower length of flipper and bill compared with Gentoo. Chinstrap has similar length of bill with Gentoo and similar length of flipper with Adelle.
+
