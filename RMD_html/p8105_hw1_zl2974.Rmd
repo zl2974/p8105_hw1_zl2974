@@ -18,13 +18,21 @@ library(tidyverse)
 *Create a data frame*
 
 ```{r}
-df_1 <- tibble(
+df_P1 <- tibble(
   samp = rnorm(10),
   samp_grt_0 = samp > 0,
   char = strsplit("thesereten",split = '')[[1]],
   fac = factor(strsplit("abcabcacba", split = '')[[1]]) #what i am confusing here is that this function create list, and list() and c() behave so inconsistantly in R, is there any good sugguestion to avoid list() overall? Or good way to detected before bugging?
 )
-str(df_1)
+str(df_P1)
+
+df_P1 <- df_P1 %>%
+  mutate(
+    in_samp_grt_0 = as.integer(get('samp_grt_0')),
+    fac_samp_grt_0 = as.factor(as.character(get('samp_grt_0'))),
+    result = as.numeric(get('fac_samp_grt_0'))*get('samp')
+  )
+df_P1
 ```
 
 # Solution to Problem 2
