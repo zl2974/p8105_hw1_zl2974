@@ -71,7 +71,8 @@ plt_flivbil <- ggplot(
     y = "Length of Flipper (MM)",
     x = "Length of Bill (MM)"
   )+
-  ggtitle("Penguins' Length of Flipper vs Bill")
+  ggtitle("Penguins' Length of Flipper vs Bill")+
+  theme(plot.title = element_text(hjust = 0.5))
 ggsave(plot = plt_flivbil,
 filename = paste(here::here(),"Result/p8105_hw1_zl2974_flipper_v_bill.png",sep="/")
 )
